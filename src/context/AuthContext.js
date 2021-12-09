@@ -17,9 +17,8 @@ export const AuthContextProvider = ({ children }) => {
   };
 
   useEffect(() => {
+    setLoading(true);
     const unsub = onAuthStateChanged(auth, (currentUser) => {
-      console.log("Auth", currentUser);
-      setLoading(true);
       setUser(currentUser);
       setLoading(false);
     });
@@ -29,7 +28,9 @@ export const AuthContextProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, googleSignIn, logout }}>
+    <AuthContext.Provider
+      value={{ user, googleSignIn, logout, loading, setLoading }}
+    >
       {children}
     </AuthContext.Provider>
   );

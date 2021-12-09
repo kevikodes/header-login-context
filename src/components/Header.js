@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useAuthContext } from "../context/AuthContext";
 
 const Header = () => {
-  const { googleSignIn, user, logout } = useAuthContext();
+  const { googleSignIn, user, logout, loading } = useAuthContext();
   const handleSignIn = async (e) => {
     e.preventDefault();
     try {
@@ -23,15 +23,16 @@ const Header = () => {
 
   return (
     <Container>
+      {console.log(loading)}
       <Title>Quiz App</Title>
       <Menu>
-        {!user && (
+        {!user && !loading && (
           <>
-            <MenuItem onClick={handleSignIn}>Login</MenuItem>
             <MenuItem>Register</MenuItem>
+            <MenuItem onClick={handleSignIn}>Login</MenuItem>
           </>
         )}
-        {user && (
+        {user && !loading && (
           <>
             <MenuItem onClick={handleLogout}>Logout</MenuItem>
           </>
@@ -64,6 +65,7 @@ const Menu = styled.div`
 
 const MenuItem = styled.div`
   margin-left: 30px;
+
   :hover {
     cursor: pointer;
   }
